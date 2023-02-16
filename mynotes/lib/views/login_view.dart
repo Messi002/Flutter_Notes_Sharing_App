@@ -2,31 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'firebase_options.dart';
+import '../firebase_options.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    home: const RegisterView(),
-  ));
-}
-
-
-
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
-
-    late final TextEditingController _emailController;
+class _LoginViewState extends State<LoginView> {
+  late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
   @override
@@ -43,11 +29,11 @@ class _RegisterViewState extends State<RegisterView> {
     super.dispose();
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text('Login'),
       ),
       body: FutureBuilder(
         future: Firebase.initializeApp(
@@ -79,11 +65,11 @@ class _RegisterViewState extends State<RegisterView> {
                         final email = _emailController.text;
                         final password = _passwordController.text;
                         final userCredential = await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
+                            .signInWithEmailAndPassword(
                                 email: email, password: password);
                         debugPrint(userCredential.toString());
                       },
-                      child: const Text('Register'))
+                      child: const Text('Login'))
                 ],
               );
             default:
