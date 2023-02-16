@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +17,6 @@ void main() {
   ));
 }
 
-
-
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
 
@@ -25,8 +25,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-
-    late final TextEditingController _emailController;
+  late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
   @override
@@ -43,7 +42,7 @@ class _RegisterViewState extends State<RegisterView> {
     super.dispose();
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -78,10 +77,14 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () async {
                         final email = _emailController.text;
                         final password = _passwordController.text;
-                        final userCredential = await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: email, password: password);
-                        debugPrint(userCredential.toString());
+                        try {
+                          final userCredential = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                                  email: email, password: password);
+                          debugPrint(userCredential.toString());
+                        } on FirebaseAuthException catch (e) {
+                          log(e.code);
+                        }
                       },
                       child: const Text('Register'))
                 ],
