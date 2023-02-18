@@ -9,7 +9,21 @@ class DrinkData {
 
   factory DrinkData.fromJson(Map<String, dynamic> json) {
     return DrinkData(
+      day: json['day'],
+      amountDrank: List<int>.from(json['amountDrank']),
+    );
+  }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['day'] = day;
+    data['amountDrank'] = amountDrank;
+    return data;
+  }
+
+  @override
+  String toString() => 'day : $day, amountDrank : $amountDrank';
+}
 
 void main(List<String> args) {
   String jsonData =
